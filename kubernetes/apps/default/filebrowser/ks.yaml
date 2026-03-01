@@ -13,7 +13,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: flux-system  # <--- This must match your 'flux get sources git' output
   wait: false
   interval: 30m
   retryInterval: 1m
