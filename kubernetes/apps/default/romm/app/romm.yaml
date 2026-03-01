@@ -27,7 +27,7 @@ spec:
           value: "romm_pass"
         - name: ROMM_AUTH_SECRET_KEY
           value: "testing-secret-key-123"
-	- name: ROMM_HOST
+        - name: ROMM_BASE_URL
 	  value: "https://romm.kadenzobel.com"
         ports:
         - containerPort: 8080
