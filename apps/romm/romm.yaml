@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: romm
+  namespace: romm
+spec:
+  selector:
+    matchLabels:
+      app: romm
+  template:
+    metadata:
+      labels:
+        app: romm
+    spec:
+      containers:
+      - name: romm
+        image: rommapp/romm:latest
+        env:
+        - name: DB_HOST
+          value: "romm-db"
+        - name: DB_NAME
+          value: "romm"
+        - name: DB_USER
+          value: "romm_user"
+        - name: DB_PASS
+          value: "romm_pass"
+        - name: ROMM_AUTH_SECRET_KEY
+          value: "testing-secret-key-123"
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: romm
+  namespace: romm
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: romm
