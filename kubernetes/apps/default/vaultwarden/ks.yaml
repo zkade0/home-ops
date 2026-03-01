@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./kubernetes/apps/default/vaultwarden
+  path: ./kubernetes/apps/default/vaultwarden/app
   prune: true
   wait: false
   sourceRef:

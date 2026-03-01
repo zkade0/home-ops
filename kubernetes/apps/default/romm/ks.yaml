@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./kubernetes/apps/default/romm
+  path: ./kubernetes/apps/default/romm/app
   prune: true
   wait: false
   sourceRef:
