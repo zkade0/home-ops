@@ -8,8 +8,13 @@ spec:
     - name: envoy-gateway
       namespace: network
   hostnames:
-    - "echo.kadenzobel.com"
+    - echo.kadenzobel.com
   rules:
-    - backendRefs:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
         - name: echo
-          port: 8080
+          namespace: default  # <--- Added this to find your app
+          port: 80           # <--- Changed from 8080 to match your 'kubectl get svc'
