@@ -10,6 +10,12 @@ spec:
   hostnames:
     - "romm.kadenzobel.com"
   rules:
-    - backendRefs:
+    - filters:
+        - type: RequestHeaderModifier
+          requestHeaderModifier:
+            add:
+              - name: X-Forwarded-Proto
+                value: https
+      backendRefs:
         - name: romm
           port: 80
