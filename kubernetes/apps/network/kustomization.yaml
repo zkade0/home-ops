@@ -7,6 +7,7 @@ components:
   - ../../components/sops
 
 resources:
+  - ./2048-route.yaml
   - ./reference-grant.yaml
   - ./namespace.yaml
   - ./cloudflare-dns/ks.yaml
