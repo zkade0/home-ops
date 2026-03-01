@@ -1,8 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./cert-manager/kustomization.yaml # Changed from ks.yaml
-  - ./default/ks.yaml
-  - ./flux-system/ks.yaml
-  - ./kube-system/ks.yaml
-  - ./network/kustomization.yaml
+  - ./cert-manager/  # <--- MUST end in a slash or just be the folder name
+  - ./default/
+  - ./flux-system/
+  - ./kube-system/
+  - ./network/
