@@ -16,3 +16,4 @@ resources:
   - ./k8s-gateway/ks.yaml
   - ./echo-route.yaml
   
+  - ./echo/ks.yaml

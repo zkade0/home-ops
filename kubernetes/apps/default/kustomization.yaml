@@ -8,6 +8,5 @@ components:
 
 resources:
   - ./namespace.yaml
-  - ./echo/ks.yaml
   - ./romm/ks.yaml
   - ./vaultwarden/ks.yaml
