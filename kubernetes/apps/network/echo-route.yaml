@@ -5,7 +5,7 @@ metadata:
   namespace: network
 spec:
   parentRefs:
-    - name: envoy-gateway
+    - name: envoy-internal  # <--- This matches your kubectl get gateways output
       namespace: network
   hostnames:
     - echo.kadenzobel.com
@@ -16,5 +16,5 @@ spec:
             value: /
       backendRefs:
         - name: echo
-          namespace: default  # <--- Added this to find your app
-          port: 80           # <--- Changed from 8080 to match your 'kubectl get svc'
+          namespace: default
+          port: 80
