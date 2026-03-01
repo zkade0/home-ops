@@ -13,3 +13,4 @@ resources:
   - ./romm/ks.yaml
   - ./vaultwarden/ks.yaml
   - ./storage.yaml
+  - ./filebrowser/ks.yaml
