@@ -3,6 +3,6 @@ kind: Kustomization
 resources:
   - ./cert-manager/  # <--- MUST end in a slash or just be the folder name
   - ./default/
-  - ./flux-system/
+#  - ./flux-system/
   - ./kube-system/
   - ./network/
