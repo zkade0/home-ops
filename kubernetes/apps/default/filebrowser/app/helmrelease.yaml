@@ -1,0 +1,72 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: filebrowser
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.1 # Adjusted to the likely current version in onedr0p template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      filebrowser:
+        containers:
+          app:
+            image:
+              repository: docker.io/filebrowser/filebrowser
+              tag: v2.32.0
+            env:
+              TZ: America/Denver
+              FB_BASEURL: /
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 500Mi
+
+    service:
+      app:
+        controller: filebrowser
+        ports:
+          http:
+            port: 80
+
+    ingress:
+      app:
+        className: external # This makes it public-facing
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "ipv4.yourdomain.com" # Update to your DDNS/Public IP
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Infrastructure
+          gethomepage.dev/icon: filebrowser.png
+          gethomepage.dev/name: File Browser
+        hosts:
+          - host: "files.yourdomain.com" # Update to your actual public domain
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+
+    persistence:
+      # Transient config for testing
+      config:
+        type: emptyDir
+      # Transient data for testing
+      data:
+        type: emptyDir
+        globalMounts:
+          - path: /srv
