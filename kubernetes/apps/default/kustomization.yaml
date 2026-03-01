@@ -12,3 +12,4 @@ resources:
   - ./namespace.yaml
   - ./romm/ks.yaml
   - ./vaultwarden/ks.yaml
+  - ./storage.yaml
