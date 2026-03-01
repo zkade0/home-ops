@@ -1,0 +1,91 @@
+---
+clusterName: kubernetes
+
+talosVersion: "${talosVersion}"
+kubernetesVersion: "${kubernetesVersion}"
+
+endpoint: https://192.168.8.10:6443
+additionalApiServerCertSans: &sans
+  - "127.0.0.1"
+  - "192.168.8.10"
+additionalMachineCertSans: *sans
+
+clusterPodNets: ["10.42.0.0/16"]
+clusterSvcNets: ["10.43.0.0/16"]
+
+# Disable built-in CNI to use Cilium
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: "k8s-0"
+    ipAddress: "192.168.8.63"
+    installDisk: "/dev/nvme0n1"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/92fb43b24bc30318ce53b515521d0ef2d1d7e37ca0fcb45461050d1be3c264fa
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "84:a9:38:c2:50:73"
+        dhcp: false
+        addresses:
+          - "192.168.8.63/24"
+        routes:
+          - gateway: "192.168.8.1"
+            network: 0.0.0.0/0
+        mtu: 1500
+        vip:
+          ip: "192.168.8.10"
+  - hostname: "k8s-1"
+    ipAddress: "192.168.8.232"
+    installDisk: "/dev/nvme0n1"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/92fb43b24bc30318ce53b515521d0ef2d1d7e37ca0fcb45461050d1be3c264fa
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "98:fa:9b:0d:df:bd"
+        dhcp: false
+        addresses:
+          - "192.168.8.232/24"
+        routes:
+          - gateway: "192.168.8.1"
+            network: 0.0.0.0/0
+        mtu: 1500
+        vip:
+          ip: "192.168.8.10"
+  - hostname: "k8s-2"
+    ipAddress: "192.168.8.210"
+    installDisk: "/dev/nvme0n1"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/92fb43b24bc30318ce53b515521d0ef2d1d7e37ca0fcb45461050d1be3c264fa
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "84:a9:38:c2:59:76"
+        dhcp: false
+        addresses:
+          - "192.168.8.210/24"
+        routes:
+          - gateway: "192.168.8.1"
+            network: 0.0.0.0/0
+        mtu: 1500
+        vip:
+          ip: "192.168.8.10"
+
+# Global patches
+patches:
+  - "@./patches/global/machine-files.yaml"
+  - "@./patches/global/machine-kubelet.yaml"
+  - "@./patches/global/machine-network.yaml"
+  - "@./patches/global/machine-sysctls.yaml"
+  - "@./patches/global/machine-time.yaml"
+
+# Controller patches
+controlPlane:
+  patches:
+    - "@./patches/controller/cluster.yaml"
+
