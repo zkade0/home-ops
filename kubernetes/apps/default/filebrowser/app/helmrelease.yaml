@@ -5,9 +5,15 @@ kind: HelmRelease
 metadata:
   name: filebrowser
 spec:
-  chartRef:
-    kind: OCIRepository
-    name: filebrowser
+  # CHANGE THIS SECTION:
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s        # This refers to the global bjw-s repo
+        namespace: flux-system
   interval: 1h
   values:
     controllers:
@@ -47,7 +53,7 @@ spec:
       app:
         enabled: true
         hostnames:
-          - "{{ .Release.Name }}.kadenzobel.com"
+          - "filebrowser.kadenzobel.com"
         parentRefs:
           - name: envoy-external
             namespace: network
