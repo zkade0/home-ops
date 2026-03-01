@@ -4,4 +4,4 @@ resources:
   - namespace.yaml
   - mariadb.yaml
   - romm.yaml
-  - ingress.yaml
+  - httproute.yaml
