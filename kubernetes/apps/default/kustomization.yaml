@@ -14,3 +14,4 @@ resources:
   - ./vaultwarden/ks.yaml
   - ./storage.yaml
   - ./filebrowser/ks.yaml
+  - ./jellyfin/ks.yaml
