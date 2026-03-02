@@ -6,7 +6,7 @@ metadata:
 spec:
   chartRef:
     kind: OCIRepository
-    name: jellyfin # Ensure your ocirepository.yaml points to bjw-s-labs app-template 4.6.2
+    name: jellyfin
   interval: 1h
   values:
     controllers:
@@ -17,7 +17,7 @@ spec:
           app:
             image:
               repository: docker.io/jellyfin/jellyfin
-              tag: 10.10.6 # Latest stable as of early 2026
+              tag: 10.10.6
             env:
               TZ: America/Denver
               JELLYFIN_PublishedServerUrl: "https://jellyfin.kadenzobel.com"
@@ -26,8 +26,6 @@ spec:
                 cpu: 100m
               limits:
                 memory: 4Gi
-                # IF USING THE INTEL DEVICE PLUGIN on Talos, uncomment the line below:
-                # gpu.intel.com/i915: 1
 
     defaultPodOptions:
       securityContext:
@@ -36,8 +34,6 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        # Talos 'render' group ID is usually 44 or 104.
-        # This is required for the pod to access /dev/dri for hardware transcoding.
         supplementalGroups: [44, 104, 10000]
 
     service:
@@ -56,22 +52,20 @@ spec:
           - name: envoy-external
             namespace: network
 
-persistence:
+    persistence:
       config:
         type: emptyDir
         globalMounts:
           - path: /config
 
-      # Your Media Library mounted directly via NFS
       media:
         type: nfs
-        server: 192.168.8.120  # <-- CHANGE THIS: Your NFS Server IP
-        path: /thegoodstuff # <-- CHANGE THIS: Your NFS Export Path
+        server: 192.168.8.120  # <-- CHANGE THIS
+        path: /thegoodstuff # <-- CHANGE THIS
         globalMounts:
           - path: /media
-            readOnly: true   # Keeps Jellyfin from accidentally deleting your files
+            readOnly: true
 
-      # Passes the GPU for hardware acceleration (if NOT using the Intel Device Plugin)
       transcode-device:
         type: hostPath
         hostPath: /dev/dri/renderD128
