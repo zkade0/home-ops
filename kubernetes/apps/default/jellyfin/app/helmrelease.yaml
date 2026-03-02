@@ -34,7 +34,8 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [44, 104, 10000]
+        # Added 107 and 109 which are common Intel/Video IDs on Talos
+        supplementalGroups: [44, 104, 107, 109, 10000]
 
     service:
       app:
@@ -60,8 +61,8 @@ spec:
 
       media:
         type: nfs
-        server: 192.168.8.120  # <-- CHANGE THIS
-        path: /thegoodstuff # <-- CHANGE THIS
+        server: 192.168.8.120
+        path: /thegoodstuff
         globalMounts:
           - path: /media
             readOnly: true
