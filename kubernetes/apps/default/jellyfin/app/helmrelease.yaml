@@ -21,6 +21,9 @@ spec:
             env:
               TZ: America/Denver
               JELLYFIN_PublishedServerUrl: "https://jellyfin.kadenzobel.com"
+            # Privileged is required to initialize the GPU driver on immutable OSs
+            securityContext:
+              privileged: true
             resources:
               requests:
                 cpu: 100m
@@ -28,13 +31,11 @@ spec:
                 memory: 4Gi
 
     defaultPodOptions:
+      hostIPC: true # Required for Intel QuickSync memory mapping
       securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
-        # Added 107 and 109 which are common Intel/Video IDs on Talos
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
         supplementalGroups: [44, 104, 107, 109, 10000]
 
     service:
