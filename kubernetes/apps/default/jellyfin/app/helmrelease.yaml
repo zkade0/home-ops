@@ -16,8 +16,8 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/jellyfin/jellyfin
-              tag: 10.10.6
+              repository: ghcr.io/jellyfin/jellyfin
+              tag: 10.11.6
             env:
               TZ: America/Denver
               JELLYFIN_PublishedServerUrl: "https://jellyfin.kadenzobel.com"
