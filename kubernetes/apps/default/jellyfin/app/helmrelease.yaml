@@ -56,23 +56,20 @@ spec:
           - name: envoy-external
             namespace: network
 
-    # persistence:
-    #   # Stores your metadata, watch history, and server config
-    #   config:
-    #     type: persistentVolumeClaim
-    #     accessMode: ReadWriteOnce
-    #     size: 20Gi
-    #     globalMounts:
-    #       - path: /config
+persistence:
+      config:
+        type: emptyDir
+        globalMounts:
+          - path: /config
 
-    #   # Your Media Library mounted directly via NFS
-    #   media:
-    #     type: nfs
-    #     server: 192.168.X.X  # <-- CHANGE THIS: Your NFS Server IP
-    #     path: /path/to/share # <-- CHANGE THIS: Your NFS Export Path
-    #     globalMounts:
-    #       - path: /media
-    #         readOnly: true   # Keeps Jellyfin from accidentally deleting your files
+      # Your Media Library mounted directly via NFS
+      media:
+        type: nfs
+        server: 192.168.8.120  # <-- CHANGE THIS: Your NFS Server IP
+        path: /thegoodstuff # <-- CHANGE THIS: Your NFS Export Path
+        globalMounts:
+          - path: /media
+            readOnly: true   # Keeps Jellyfin from accidentally deleting your files
 
       # Passes the GPU for hardware acceleration (if NOT using the Intel Device Plugin)
       transcode-device:
