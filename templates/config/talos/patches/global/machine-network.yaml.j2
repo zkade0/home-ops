@@ -5,3 +5,7 @@ machine:
       #% for item in node_dns_servers %#
       - #{ item }#
       #% endfor %#
+  features:
+    kubePrism:
+      enabled: true
+      port: 7445
