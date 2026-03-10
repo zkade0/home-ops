@@ -2,7 +2,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: rook-ceph
-  namespace: flux-system
+  namespace: flux-system # This MUST be flux-system
 spec:
   interval: 24h
   url: https://charts.rook.io/release
